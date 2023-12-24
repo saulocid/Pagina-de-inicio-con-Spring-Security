@@ -11,6 +11,9 @@
         <div th:replace="fragments/header :: header"></div>
     </header>
 
+    <p class="error" th:if="${error!=null}" th:text="${error}"></p>
+    <p class="exito" th:if="${exito!=null}" th:text="${exito}"></p>
+
     <h1>Si No eres usuario</h1>
 
     <div class="contenedor">
@@ -34,9 +37,6 @@
             <button type="submit">Ingresar</button>
         </form>
     </div>
-
-    <p class="error" th:if="${error!=null}" th:text="${error}"></p>
-    <p class="exito" th:if="${exito!=null}" th:text="${exito}"></p>
 
     <footer>
         <div th:replace="fragments/footer :: footer"></div>
