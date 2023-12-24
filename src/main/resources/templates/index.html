@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" th:href="@{/style.css}">
+</head>
+
+<body>
+
+    <h1>Si No eres usuario</h1>
+
+    <div class="contenedor">
+        <form th:action="@{/registrar}" method="post">
+            <h1>Crea una cuenta</h1>
+            <input type="text" name="username" placeholder="Nombre de usuario" required />
+            <input type="email" name="email" placeholder="Email" required />
+            <input type="password" name="password" placeholder="Contraseña" required />
+            <input type="password" name="password2" placeholder="Repetir cotraseña" required />
+            <button type="submit">Registrar</button>
+        </form>
+    </div>
+    
+    <h1>Si eres usuario</h1>
+    
+    <div class="contenedor">
+        <form th:action="@{/login}" method="post">
+            <h1>Inicia sesión</h1>
+            <input type="email" name="email" placeholder="Email" required />
+            <input type="password" name="password" placeholder="Contraseña" required />
+            <button type="submit">Ingresar</button>
+        </form>
+    </div>
+
+    <p class="error" th:if="${error!=null}" th:text="${error}"></p>
+    <p class="exito" th:if="${exito!=null}" th:text="${exito}"></p>
+
+</body>
+
+</html>

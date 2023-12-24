@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inicio</title>
+    <link rel="stylesheet" th:href="@{/style.css}">
+</head>
+<body>
+    <h1>Página de Inicio</h1>
+    <p>Bienvenid@ a la web de prueba de inicio y cierre de sesión de usuarios</p>
+    <p>Eres un usuario ADMIN!</p>
+    <p sec:authorize="(hasRole('MODERATOR'))">Además si eres MODERATOR puedes ver ésto también!</p>
+    <p>No hay mucho más que ver aquí</p>
+    <form th:action="@{/cerrar}" method="post">
+        <button type="submit">Cerrar Sesión</button>
+    </form>
+</body>
+</html>

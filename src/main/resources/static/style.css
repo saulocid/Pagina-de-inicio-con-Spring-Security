@@ -1,0 +1,54 @@
+body{
+    display: block;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    background-color: #1b1b1b;
+    color: #cfcfcf;
+}
+
+a{
+    text-decoration: none;
+}
+
+ul {
+    list-style: none;
+}
+
+button {
+    filter: drop-shadow(0 0 2px #000000);
+    background: linear-gradient(to right, rgb(54, 0, 71), rgb(47, 255, 0));
+    color: #ffffff;
+}
+
+button:hover{
+    transition: 300ms;
+    background-color: #ffffff;
+    color: #000000;
+}
+
+button:not(:hover){
+    transition: 300ms;
+}
+
+.contenedor {
+    padding: 15px;
+    background-color: #cfcfcf;
+    color: #1b1b1b;
+}
+
+.exito {
+    background-color: green;
+    color: black;
+    border: 1px grey solid;
+    border-radius: 5px;
+    padding: 10px 0;
+}
+
+.error {
+    background-color: red;
+    color: yellow;
+    border: 1px grey solid;
+    border-radius: 5px;
+    padding: 10px 0;
+}
