@@ -12,11 +12,29 @@
     </header>
 
     <h1>Página de Inicio</h1>
-    
+
+    <p>Hola otra vez <span th:if="${logeado != null}" th:text="${logeado.username}"></span></p>
     <p>Bienvenid@ a la web de prueba de inicio y cierre de sesión de usuarios</p>
     <p>Eres un usuario ADMIN!</p>
     <p sec:authorize="(hasRole('MODERATOR'))">Además si eres MODERATOR puedes ver ésto también!</p>
     <p>No hay mucho más que ver aquí</p>
+
+    <table>
+        <thead>
+            <th>Usuario</th>
+            <th>Email</th>
+            <th sec:authorize="(hasRole('MODERATOR'))">Borrar</th>
+        </thead>
+        <tbody th:if="${usuarios != null}" th:each="usuario : ${usuarios}">
+            <td th:text="${usuario.getUsername()}"></td>
+            <td th:text="${usuario.getEmail()}"></td>
+            <td sec:authorize="(hasRole('MODERATOR'))">
+                <form th:action="@{/admin/borrar/__${usuario.id}__}" method="post">
+                    <button type="submit">X</button>
+                </form>
+            </td>
+        </tbody>
+    </table>
 
     <form th:action="@{/cerrar}" method="post">
         <button type="submit">Cerrar Sesión</button>

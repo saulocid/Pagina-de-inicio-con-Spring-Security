@@ -2,6 +2,8 @@ package com.saulociddev.springsecproject.services;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -54,6 +56,17 @@ public class UsuarioService implements UserDetailsService {
         userRepo.save(usuario);
     }
 
+    public List<Usuario> buscarUsuarios() {
+        return userRepo.findAll();
+    }
+
+    @Transactional
+    public void borrarUsuario(String id) throws MyException {
+        validarId(id);
+        Usuario usuario = userRepo.buscarPorId(id);
+        userRepo.delete(usuario);
+    }
+
     public void validarUsuario(String usuario, String email, String password, String password2) throws MyException {
         if (usuario.isEmpty()) {
             throw new MyException("El usuario no puede ser nulo");
@@ -92,9 +105,15 @@ public class UsuarioService implements UserDetailsService {
             PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
             if (!passwordEncoder.matches(password, usuario.getPassword())) {
                 throw new MyException("La contraseña es incorrecta");
-            }   
+            }
         } catch (MyException e) {
             throw new MyException("Error inesperado");
+        }
+    }
+
+    public void validarId(String dato) throws MyException {
+        if (dato == null) {
+            throw new MyException("El dato no puede ser nulo");
         }
     }
 

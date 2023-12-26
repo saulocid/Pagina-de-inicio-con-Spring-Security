@@ -1,10 +1,12 @@
 package com.saulociddev.springsecproject.controllers;
 
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -52,18 +54,39 @@ public class AppController {
     
     @PreAuthorize("hasAnyRole('USER','ADMIN','MODERATOR')")
     @GetMapping("/inicio")
-    public String inicio(HttpSession sesion){
+    public String inicio(HttpSession sesion, ModelMap modelo){
         Usuario logeado = (Usuario) sesion.getAttribute("logeado");
+        modelo.addAttribute("logeado", logeado);
+        listarItems(modelo);
         if (logeado.getRol().toString().equals("ADMIN") || logeado.getRol().toString().equals("MODERATOR")) {
-            return "redirect:/admin";
+            return "admin";
         }
         return "inicio";
+    }
+
+    @PreAuthorize("hasAnyRole('ADMIN','MODERATOR')")
+    @PostMapping("/admin/borrar/{id}")
+    public String borrar(@PathVariable String id, ModelMap modelo){
+        try {
+            userServ.borrarUsuario(id);
+            listarItems(modelo);
+            return "admin";
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            listarItems(modelo);
+            return "admin";
+        }
     }
 
     @PreAuthorize("hasAnyRole('ADMIN','MODERATOR')")
     @GetMapping("/admin")
     public String admin(){
         return "admin";
+    }
+
+    public void listarItems(ModelMap modelo){
+        List<Usuario> usuarios = userServ.buscarUsuarios();
+        modelo.addAttribute("usuarios", usuarios);
     }
 
 }
