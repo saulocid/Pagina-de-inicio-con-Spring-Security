@@ -16,7 +16,6 @@ import com.saulociddev.springsecproject.services.UsuarioService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.web.bind.annotation.RequestBody;
 
-
 @Controller
 @RequestMapping("/")
 public class AppController {

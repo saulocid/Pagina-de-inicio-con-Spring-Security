@@ -12,35 +12,35 @@ import com.saulociddev.springsecproject.services.UsuarioService;
 @Controller
 public class WebSecurity {
 
-    @Autowired
-    public UsuarioService usuarioServices;
+        @Autowired
+        public UsuarioService usuarioServices;
 
-    // Encriptado de password
-    @Autowired
-    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(usuarioServices).passwordEncoder(new BCryptPasswordEncoder());
-    }
+        // Encriptado de password
+        @Autowired
+        public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
+                auth.userDetailsService(usuarioServices).passwordEncoder(new BCryptPasswordEncoder());
+        }
 
-    @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        http
-                .authorizeHttpRequests((authz) -> authz
-                        .requestMatchers("/admin/*").hasAnyRole("ADMIN","MODERATOR")
-                        .anyRequest()
-                        .permitAll())
-                .formLogin((login) -> login
-                        .loginPage("/")
-                        .loginProcessingUrl("/login") // PostMapping de logeo
-                        .usernameParameter("email")
-                        .passwordParameter("password")
-                        .defaultSuccessUrl("/inicio")
-                        .permitAll())
-                .logout((logout) -> logout
-                        .logoutUrl("/cerrar") // PostMapping de cerrie de sesión
-                        .logoutSuccessUrl("/")
-                        .permitAll())
-                .csrf((csrf) -> csrf.disable());
-        return http.build();
-    }
+        @Bean
+        public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+                http
+                                .authorizeHttpRequests((authz) -> authz
+                                                .requestMatchers("/admin/*").hasAnyRole("ADMIN", "MODERATOR")
+                                                .anyRequest()
+                                                .permitAll())
+                                .formLogin((login) -> login
+                                                .loginPage("/")
+                                                .loginProcessingUrl("/login") // PostMapping de logeo
+                                                .usernameParameter("email")
+                                                .passwordParameter("password")
+                                                .defaultSuccessUrl("/inicio")
+                                                .permitAll())
+                                .logout((logout) -> logout
+                                                .logoutUrl("/cerrar") // PostMapping de cerrie de sesión
+                                                .logoutSuccessUrl("/")
+                                                .permitAll())
+                                .csrf((csrf) -> csrf.disable());
+                return http.build();
+        }
 
 }
